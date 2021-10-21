@@ -64,6 +64,7 @@ int download_all_subjects()
 	FILE* fp = fopen( "subject-list.txt", "r" );
 	FILE* begin = fp;
 	FILE* end = fp;
+	int n_subject = 0;
 	while (1)
 	{
 		// read subject into str
@@ -86,7 +87,8 @@ int download_all_subjects()
 			}
 		}
 	found_subject:
-		printf( "Downloading file for %s\n", subject );
+		++n_subject;
+		printf( "Downloading file for %3s (%d/126) \n", subject, n_subject );
 		download_file_from_subject( subject );
 		if (foundEnd)
 			break;
