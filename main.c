@@ -27,7 +27,7 @@ int do_request(char* url, char* filename, char* varname)
 	curl_easy_setopt( curl, CURLOPT_WRITEDATA, fp );
 	curl_easy_setopt( curl, CURLOPT_ERRORBUFFER, errbuf );
 
-	fprintf( fp, "const %s = ", varname );
+	fprintf( fp, "course_dict[\"%s\"] = ", varname );
 	res = curl_easy_perform( curl );
 	fprintf( fp, ";\n" );
 	fclose( fp );
