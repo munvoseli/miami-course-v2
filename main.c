@@ -29,7 +29,7 @@ int do_request(char* url, char* filename, char* varname)
 
 	fprintf( fp, "const %s = ", varname );
 	res = curl_easy_perform( curl );
-	fprintf( fp, ";" );
+	fprintf( fp, ";\n" );
 	fclose( fp );
 	if (res != CURLE_OK) printf("error %d\n%s\n", res, errbuf);
 
@@ -54,9 +54,45 @@ int download_file_from_subject( char* subject )
 	do_request( url, filename, subject );
 	free(url);
 	free(filename);
+	return 0;
 }
 
-
+int download_all_subjects()
+{
+	char subject [4];
+	unsigned char subi = 0;
+	FILE* fp = fopen( "subject-list.txt", "r" );
+	FILE* begin = fp;
+	FILE* end = fp;
+	while (1)
+	{
+		// read subject into str
+		char foundEnd = 0;
+		subi = 0;
+		while (1)
+		{
+			int c = fgetc(end);
+			switch (c)
+			{
+			case EOF:
+			case '\n':
+				foundEnd = 1;
+			case ' ':
+				subject[subi] = 0;
+				goto found_subject;
+			default:
+				subject[subi] = (char) c;
+				++subi;
+			}
+		}
+	found_subject:
+		printf( "Downloading file for %s\n", subject );
+		download_file_from_subject( subject );
+		if (foundEnd)
+			break;
+	}
+	return 0;
+}
 
 int main(int argc, char** argv)
 {
@@ -66,7 +102,10 @@ int main(int argc, char** argv)
 		printf( "need a subject\n" );
 		return 1;
 	}
-	download_file_from_subject( argv[1] );
+	if (strcmp( argv[1], "all" ) == 0)
+		download_all_subjects();
+	else
+		download_file_from_subject( argv[1] );
 	return 0;
 }
 
