@@ -5,6 +5,8 @@ var input = document.getElementById("course-input");
 var output = document.getElementById("output");
 var form = document.getElementById("form");
 
+var aa_schedule_global = [];
+
 function get_info (subject, number)
 {
     var course_section;
@@ -48,6 +50,14 @@ function get_next_color()
     return colors[color_index++];
 }
 
+function is_time_okay( secsched )
+{
+    for (var day of secsched)
+	if (time_to_minutes(day.startTime) < time_to_minutes("9:00"))
+	    return false;
+    return true;
+}
+
 function make_class_buttons(subject, number)
 {
     var color = get_next_color();
@@ -56,6 +66,7 @@ function make_class_buttons(subject, number)
     elClass.innerHTML = subject + " " + number + " ";
     document.getElementById("course-buttons").appendChild(elClass);
     elClass.style.backgroundColor = color;
+    var a_sched = [];
     for (var course_section of course_dict[subject].courseSections)
     {
 	if (course_section.courseNumber == number)
@@ -72,6 +83,8 @@ function make_class_buttons(subject, number)
 	    label.setAttribute("for", course_section.courseCode);
 	    button.section = course_section;
 	    button.schedule = course_section.courseSchedules;
+	    if (is_time_okay(button.schedule))
+		a_sched.push(course_section);
 	    button.color = color;
 	    button.addEventListener("click", function(e) {
 		display_all();
@@ -84,6 +97,7 @@ function make_class_buttons(subject, number)
 	}
     }
     document.getElementById("course-buttons").appendChild(document.createElement("br"));
+    aa_schedule_global.push(a_sched);
 }
 
 function load_subject(subject, callback)

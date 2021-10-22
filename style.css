@@ -12,3 +12,7 @@ span.section-list-label {
     display: inline-block;
     margin-left: 1em;
 }
+
+#course-text-schedule, #suggestions {
+    float: right;
+}
