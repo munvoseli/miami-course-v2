@@ -89,7 +89,7 @@ function make_class_buttons(subject, number)
 function load_subject(subject, callback)
 {
     var scpt = document.createElement("script");
-    scpt.src = `js/${subject}.js`;
+    scpt.src = `coursedata/${subject}.jsonp`;
     scpt.onload = function() {
 	document.head.removeChild(scpt);
 	callback();
