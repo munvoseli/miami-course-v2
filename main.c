@@ -49,7 +49,7 @@ int download_file_from_subject( char* subject )
 
 	len = strlen(subject) + 3;
 	char* filename = malloc(len + 1);
-	sprintf( filename, "%s.js", subject );
+	sprintf( filename, "%s.jsonp", subject );
 
 	do_request( url, filename, subject );
 	free(url);
