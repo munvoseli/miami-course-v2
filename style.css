@@ -2,3 +2,13 @@ pre {
     white-space: pre-wrap;
     font-size: 18px;
 }
+
+span.section-list-label {
+    display: inline-block;
+    min-width: 8em;
+}
+
+.section-radio {
+    display: inline-block;
+    margin-left: 1em;
+}
