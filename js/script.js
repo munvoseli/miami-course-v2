@@ -52,9 +52,14 @@ function get_next_color()
 
 function is_time_okay( secsched )
 {
+    return true;
     for (var day of secsched)
+    {
 	if (time_to_minutes(day.startTime) < time_to_minutes("9:00"))
 	    return false;
+	if (time_to_minutes(day.endTime) > time_to_minutes("18:00"))
+	    return false;
+    }
     return true;
 }
 
