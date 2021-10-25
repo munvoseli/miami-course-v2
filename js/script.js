@@ -63,6 +63,18 @@ function is_time_okay( secsched )
     return true;
 }
 
+function remove_null_days(course_section)
+{
+    for (var i = 0; i < course_section.courseSchedules.length; ++i)
+    {
+	if (course_section.courseSchedules[i].days == null)
+	{
+	    course_section.courseSchedules.splice(i, 1);
+	    --i;
+	}
+    }
+}
+
 function make_class_buttons(subject, number)
 {
     var color = get_next_color();
@@ -86,6 +98,7 @@ function make_class_buttons(subject, number)
 	    button.setAttribute("value", course_section.courseSectionCode);
 	    button.setAttribute("id", course_section.courseCode);
 	    label.setAttribute("for", course_section.courseCode);
+	    remove_null_days(course_section);
 	    button.section = course_section;
 	    button.schedule = course_section.courseSchedules;
 	    if (is_time_okay(button.schedule))
