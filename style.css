@@ -13,6 +13,10 @@ span.section-list-label {
     margin-left: 1em;
 }
 
-#course-text-schedule, #suggestions {
+/*#course-text-schedule, #suggestions {
+    float: right;
+}*/
+
+#clicky-stuff {
     float: right;
 }
