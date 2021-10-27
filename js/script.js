@@ -43,12 +43,22 @@ ff00ff
 000000
 aa1166`.split("\n").map(x=>"#"+x);
 */
-const colors = ["#beedab", "#789", "#aaaaaa", "#beeee5", "#c58", "#ffff00"];
+const colors = ["#beedab", "#bcd", "#aaaaaa",
+		"#beeee5", "#c58",
+		"#e79e00", "#c6d"];
 var color_index = 0;
 
 function get_next_color()
 {
-    return colors[color_index++];
+    if (color_index < colors.length)
+	return colors[color_index++];
+    else
+    {
+	var str = parseInt(Math.random() * (1<<24)).toString(16);
+	while (str.length < 6)
+	    str = "0" + str;
+	return "#" + str;
+    }
 }
 
 function is_time_okay( secsched )
