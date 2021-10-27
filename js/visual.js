@@ -35,6 +35,7 @@ function draw_background()
 	ctx.closePath();
     }
     ctx.beginPath();
+    var rtext = 4 * 25;
     var r0 = 5 * 25;
     var r1 = 9 * 25;
     for (var i = 9; i <= 21; ++i)
@@ -46,6 +47,18 @@ function draw_background()
 	ctx.lineTo(cx + r1 * c, cy + r1 * s);
     }
     ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    for (var i = 0; i < 4; ++i)
+    {
+	var x = [0,1,0,-1][i] * rtext + cx;
+	var y = [-1,0,1,0][i] * rtext + cy;
+	var text = ["midnight", "6am", "noon", "6pm"][i];
+	ctx.fillText(text, x, y);
+    }
     ctx.closePath();
 }
 
