@@ -88,8 +88,13 @@ function put_schedule_on_canvas( courseSchedules, color )
 	put_schedule_part_on_canvas( part, color );
 }
 
-function span_text_schedule(schedule, color, parent)
+function span_text_schedule(schedule, sectionInfo, color, parent)
 {
+    var infoStuff = sectionInfo.crn;
+    if (sectionInfo.instructors)
+	for (let instructor of sectionInfo.instructors)
+	    infoStuff += " " + instructor.nameDisplayFormal;
+    span_text(infoStuff, color, parent);
     for (var part of schedule)
     {
 	var span = document.createElement("span");
@@ -119,7 +124,7 @@ function display_text_schedule()
     {
 	if (child.checked)
 	{
-	    span_text_schedule(child.schedule, child.color, parent);
+	    span_text_schedule(child.schedule, child.sectionInfo, child.color, parent);
 	}
     }
 }

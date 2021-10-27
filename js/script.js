@@ -6,6 +6,7 @@ var output = document.getElementById("output");
 var form = document.getElementById("form");
 
 var aa_schedule_global = [];
+var aSectionInfo = [];
 
 function get_info (subject, number)
 {
@@ -90,17 +91,20 @@ function make_class_buttons(subject, number)
 	{
 	    if (!course_section.courseSchedules.length)
 		continue;
-	    console.log(course_section.courseSchedules.length);
+	    const sectionInfo = constructSectionInfo(course_section);
+	    aSectionInfo.push(sectionInfo);
+	    
 	    let button = document.createElement("input");
 	    let label = document.createElement("label");
 	    button.setAttribute("type", "radio");
 	    button.setAttribute("name", subject + number);
-	    button.setAttribute("value", course_section.courseSectionCode);
-	    button.setAttribute("id", course_section.courseCode);
-	    label.setAttribute("for", course_section.courseCode);
+	    button.setAttribute("value", sectionInfo.letter);
+	    button.setAttribute("id", sectionInfo.fullName);
+	    label.setAttribute("for", sectionInfo.fullName);
 	    remove_null_days(course_section);
 	    button.section = course_section;
 	    button.schedule = course_section.courseSchedules;
+	    button.sectionInfo = sectionInfo;
 	    if (is_time_okay(button.schedule))
 		a_sched.push(course_section);
 	    button.color = color;
