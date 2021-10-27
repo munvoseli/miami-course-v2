@@ -1,5 +1,5 @@
 pre {
-    white-space: pre-wrap;
+    white-space: break-spaces;
     font-size: 18px;
 }
 
@@ -13,10 +13,22 @@ span.section-list-label {
     margin-left: 1em;
 }
 
-/*#course-text-schedule, #suggestions {
-    float: right;
-}*/
 
-#clicky-stuff {
-    float: right;
+/* large screen widths */
+@media screen and (min-width: 900px) {
+    body {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
+    }
+    #intro {
+	max-width: 600px;
+    }
+}
+
+/* small screen widths */
+@media not screen and (min-width: 900px) {
+    body {
+	display: block;
+    }
 }

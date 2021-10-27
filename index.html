@@ -9,16 +9,19 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <form id="form">
-      <input id="course-input" placeholder="CSE 271" />
-      <button id="button" type="button">Click to see description (or press enter)</button>
-    </form>
+    <div id="intro">
+      <h2>for spring 2022</h2>
+      <form id="form">
+	<input id="course-input" placeholder="CSE 271" />
+	<button id="button" type="button">Click to see description (or press enter)</button>
+      </form>
+      <pre id="output"></pre>
+    </div>
     <div id="clicky-stuff">
       <div id="course-buttons"></div>
       <div id="course-text-schedule"></div>
       <pre id="suggestions">Click to suggest</pre>
       <canvas id="canvas"></canvas>
     </div>
-    <pre id="output"></pre>
   </body>
 </html>
