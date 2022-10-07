@@ -1,7 +1,7 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = 1000;
+canvas.height = 300;
 
 const day_lookup = {M: 0, T: 1, W: 2, R: 3, F: 4};
 
@@ -62,7 +62,7 @@ function draw_background()
     ctx.closePath();
 }
 
-draw_background();
+//draw_background();
 
 function put_day_on_canvas( start, end, weekday )
 {
@@ -111,7 +111,7 @@ function span_text_schedule(schedule, sectionInfo, color, parent)
     for (var part of schedule)
     {
 	var span = document.createElement("span");
-	span.innerHTML = part.days + " " + part.startTime + " " + part.endTime;
+	span.innerHTML = part.days + " " + part.startTime + " " + part.endTime + " " + part.buildingName;
 	span.style.backgroundColor = color;
 	parent.appendChild(span);
 	parent.appendChild(document.createElement("br"));
@@ -170,9 +170,45 @@ function redraw_all()
     }
 }
 
+function redrawAll() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let parent = document.getElementById("course-buttons");
+    let hs = canvas.height / 5;
+    let ws = canvas.width / 24 / 60;
+    ctx.beginPath();
+    ctx.moveTo(ws * 10 * 60, 0);
+    ctx.lineTo(ws * 10 * 60, hs * 5);
+    ctx.moveTo(ws * 16.5 * 60, 0);
+    ctx.lineTo(ws * 16.5 * 60, hs * 5);
+    ctx.stroke();
+    ctx.closePath();
+    for (let child of parent.children) {
+	if (child.checked) {
+	    let sched = child.schedule;
+	    let color = child.color;
+	    console.log(color, sched);
+	    for (let session of child.schedule) {
+		let ta = time_to_minutes(session.startTime);
+		let tb = time_to_minutes(session.endTime);
+		let building = session.buildingName;
+		for (let day of session.days) {
+		    let dn = day_lookup[day];
+		    ctx.beginPath();
+		    ctx.fillStyle = color;
+		    ctx.fillRect(ta * ws, dn * hs, (tb - ta) * ws, hs);
+		    ctx.closePath();
+		    ctx.fillStyle = "#000";
+		    ctx.fillText(building, ta * ws, (dn + 0.5) * hs);
+		    ctx.closePath();
+		}
+	    }
+	}
+    }
+}
+
 function display_all()
 {
-    redraw_all();
+    redrawAll();
     display_text_schedule();
     display_more_info();
 }

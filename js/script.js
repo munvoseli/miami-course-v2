@@ -22,7 +22,7 @@ function get_info (subject, number)
     }
     if (found_course)
     {
-	console.log(course_section);
+	//console.log(course_section);
 	return `${subject} ${number}  (${course_section.creditHoursDesc} credit hours)
 
 ${course_section.courseDescription || "[no description]"}`;
@@ -143,18 +143,43 @@ function load_subject(subject, callback)
     document.head.appendChild(scpt);
 }
 
-function get_info_from_input ()
+
+async function load_subject_blocking(subject)
 {
-    var subject, id;
-    [subject, id] = input.value.split(" ");
-    if (!course_dict[subject])
-    {
-	load_subject(subject, get_info_from_input);
-	return;
+    var scpt = document.createElement("script");
+    scpt.src = `coursedata/${subject}.jsonp`;
+    document.head.appendChild(scpt);
+    await new Promise(resolve => {
+	scpt.onload = function() {
+	    document.head.removeChild(scpt);
+	    //console.log("resolved");
+	    resolve(5);
+	};
+    });
+    //console.log("exited");
+}
+
+async function makeCourseInputs(subject, id) {
+    if (!course_dict[subject]) {
+	await load_subject_blocking(subject);
     }
-    
+    if (!course_dict[subject]) {
+	console.error("didn't actually block");
+    }
     make_class_buttons( subject, id );
     output.innerHTML = get_info( subject, id ) + "\n\n\n\n" + output.innerHTML;
+}
+
+function get_info_from_input ()
+{
+    for (let line of input.value.split("\n")) {
+	if (line.length == 0) {
+	    continue;
+	}
+	var subject, id;
+	[subject, id] = line.split(" ");
+	makeCourseInputs(subject, id);
+    }
 }
 
 button.addEventListener("click", get_info_from_input, false);
@@ -177,16 +202,13 @@ function add_class_by_name( onm )
     make_class_buttons( subject, number );
 }
 
-if (location.href[0] == "f")
+if (location.href[0] == "m")
 {
     var classes = `\
-CCA 111H
-BIO 116
-CSE 271
 MTH 222
 MTH 231`.split("\n");
     classes.forEach(add_class_by_name);
     setTimeout(function() {
-	"CCA 111H HA.MTH 222 B.MTH 231 A.CSE 271 A.BIO 116 BA".split(".").forEach((x => document.getElementById(x).click()));
+	"MTH 222 B.MTH 231 A".split(".").forEach((x => document.getElementById(x).click()));
     }, 100);
 }

@@ -12,7 +12,7 @@
     <div id="intro">
       <h2>for oxford fall 2022</h2>
       <form id="form">
-	<input id="course-input" placeholder="CSE 271" />
+	<textarea id="course-input" style="min-height: 9em;" placeholder="CSE 271" /></textarea>
 	<button id="button" type="button">Click to see description (or press enter)</button>
       </form>
       <pre id="output"></pre>
@@ -20,7 +20,8 @@
     <div id="clicky-stuff">
       <div id="course-buttons"></div>
       <div id="course-text-schedule"></div>
-      <pre id="suggestions">Click to suggest</pre>
+      <button id="suggest">Click to suggest</button>
+      <div id="suggestions"></div>
       <canvas id="canvas"></canvas>
     </div>
   </body>
