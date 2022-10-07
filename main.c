@@ -37,7 +37,7 @@ int do_request(char* url, char* filename, char* varname)
 	return 0;
 }
 
-#define SUBJECT_FORMAT_PARAMS "https://ws.miamioh.edu/courseSectionV2/202310.json?campusCode=O&courseSubjectCode=%s", subject
+#define SUBJECT_FORMAT_PARAMS "https://ws.miamioh.edu/courseSectionV2/202320.json?campusCode=O&courseSubjectCode=%s", subject
 
 int download_file_from_subject( char* subject )
 {
